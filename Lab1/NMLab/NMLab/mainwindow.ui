@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="testTask">
      <attribute name="title">
@@ -971,8 +971,7 @@
       </property>
       <property name="text">
        <string>Посмотреть
-выходные
-данные</string>
+результаты</string>
       </property>
      </widget>
      <widget class="QLineEdit" name="main2LineEdit_xmax">
