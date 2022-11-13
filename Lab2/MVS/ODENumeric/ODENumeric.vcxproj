@@ -19,7 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="tridiagonal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="tridiagonal.h" />
