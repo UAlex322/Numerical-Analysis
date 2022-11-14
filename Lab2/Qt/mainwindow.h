@@ -15,7 +15,13 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_pushButton_pressed();
+
 private:
     Ui::MainWindow *ui;
+    void on_testSolveButton_pressed();
+    void on_main1SolveButton_clicked();
+    bool checkInput(const QString &, size_t &);
 };
 #endif // MAINWINDOW_H

@@ -242,11 +242,11 @@
          </rect>
         </property>
        </widget>
-       <widget class="QCustomPlot" name="widget" native="true">
+       <widget class="QCustomPlot" name="testPlot" native="true">
         <property name="geometry">
          <rect>
-          <x>380</x>
-          <y>30</y>
+          <x>410</x>
+          <y>20</y>
           <width>571</width>
           <height>571</height>
          </rect>
@@ -268,7 +268,7 @@
      <x>0</x>
      <y>0</y>
      <width>1100</width>
-     <height>21</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
