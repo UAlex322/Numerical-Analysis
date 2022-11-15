@@ -12,8 +12,35 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    ui->testPlot->setInteraction(QCP::iRangeZoom,true);
-    ui->testPlot->setInteraction(QCP::iRangeDrag,true);
+
+    ui->tPlot->setInteraction(QCP::iRangeZoom,true);
+    ui->tPlot->setInteraction(QCP::iRangeDrag,true);
+
+    ui->tTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->tTable->setStyleSheet("border: 1px solid grey");
+    ui->tTable->setModel(new QStandardItemModel(0,4,this));
+    ui->tTable->model()->setHeaderData(0, Qt::Horizontal, "x_i");
+    ui->tTable->model()->setHeaderData(1, Qt::Horizontal, "u_i");
+    ui->tTable->model()->setHeaderData(2, Qt::Horizontal, "u_i");
+    ui->tTable->model()->setHeaderData(3, Qt::Horizontal, "|u_i - v_i|");
+    ui->tTable->setColumnWidth(0,75);
+    for (int i = 1; i < 4; ++i)
+        ui->tTable->setColumnWidth(i,90);
+
+
+    ui->mPlot->setInteraction(QCP::iRangeZoom,true);
+    ui->mPlot->setInteraction(QCP::iRangeDrag,true);
+
+    ui->mTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    ui->mTable->setStyleSheet("border: 1px solid grey");
+    ui->mTable->setModel(new QStandardItemModel(0,4,this));
+    ui->mTable->model()->setHeaderData(0, Qt::Horizontal, "x_i");
+    ui->mTable->model()->setHeaderData(1, Qt::Horizontal, "v_i");
+    ui->mTable->model()->setHeaderData(2, Qt::Horizontal, "v2_i");
+    ui->mTable->model()->setHeaderData(3, Qt::Horizontal, "|v_i - v2_i|");
+    ui->mTable->setColumnWidth(0,75);
+    for (int i = 1; i < 4; ++i)
+        ui->mTable->setColumnWidth(i,90);
 }
 
 MainWindow::~MainWindow()
@@ -21,121 +48,8 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// ТЕСТОВОЕ ЗАДАНИЕ
-void MainWindow::on_pushButton_pressed()
-{
-    QString str_n = ui->lineEdit->text();
 
-    size_t n;
-
-    if (!checkInput(str_n, n))
-    {
-        return;
-    }
-
-    auto stdv = solve_test(n);
-    QVector<double> v(stdv.begin(), stdv.end());
-    auto stdu = solve_test(n);
-    QVector<double> u(stdu.begin(), stdu.end());
-
-    QVector<double> x(n+1), xi(n+1);
-    double h = 1.0/(double)n;
-    double xc = 0.0;
-    for (size_t i = 0; i <= n; ++i, xc += h)
-        x[i] = xc;
-    for (size_t i = 0; i <= n; ++i)
-        xi[i] = u[i] - v[i];
-
-    auto max_err_iter = std::max_element(xi.begin(), xi.end());
-    double max_err = *max_err_iter;
-    double max_err_pos = (max_err_iter - xi.begin())*h;
-
-
-    // График 1
-    QCustomPlot* customPlot1 = ui->testPlot;
-    customPlot1->clearGraphs();
-
-    customPlot1->xAxis->setRange(0, 1);
-    customPlot1->yAxis->setRange(0, 1);
-
-    customPlot1->xAxis->setLabel("x");
-    customPlot1->yAxis->setLabel("u");
-
-    customPlot1->addGraph();
-    customPlot1->graph(0)->addData(x, u);
-    customPlot1->graph(0)->setPen(QPen(Qt::blue));
-    customPlot1->graph(0)->setName("Аналитическое решение u(x)");
-
-    customPlot1->addGraph();
-    customPlot1->graph(1)->addData(x, v);
-    customPlot1->graph(1)->setPen(QPen(Qt::green));
-    customPlot1->graph(1)->setName("Численное решение v(x)");
-
-    customPlot1->addGraph();
-    customPlot1->graph(2)->addData(x, xi);
-    customPlot1->graph(2)->setPen(QPen(Qt::red));
-    customPlot1->graph(2)->setName("Разность аналитического и численного решения |u(x)-v(x)|");
-
-    customPlot1->replot();
-}
-
-// ОСНОВНОЕ ЗАДАНИЕ
-void MainWindow::on_main1SolveButton_clicked()
-{
-    QString str_n = ui->lineEdit->text();
-
-    size_t n;
-    if (!checkInput(str_n, n))
-    {
-        return;
-    }
-
-    auto stdv = solve_test(n);
-    QVector<double> v(stdv.begin(), stdv.end());
-    auto stdv2 = solve_test(n);
-    QVector<double> v2(stdv2.begin(), stdv2.end());
-
-    QVector<double> x(n+1), xi(n+1);
-    double h = 1.0/(double)n;
-    double xc = 0.0;
-    for (size_t i = 0; i <= n; ++i, xc += h)
-        x[i] = xc;
-    for (size_t i = 0; i <= n; ++i)
-        xi[i] = v[i] - v2[i];
-
-    auto max_err_iter = std::max_element(xi.begin(), xi.end());
-    double max_err = *max_err_iter;
-    double max_err_pos = (max_err_iter - xi.begin())*h;
-
-    // График 1
-    QCustomPlot* customPlot1 = ui->testPlot;
-    customPlot1->clearGraphs();
-
-    customPlot1->xAxis->setRange(0, 1);
-    customPlot1->yAxis->setRange(-0.5, 1);
-
-    customPlot1->xAxis->setLabel("x");
-    customPlot1->yAxis->setLabel("v");
-
-    customPlot1->addGraph();
-    customPlot1->graph(0)->addData(x, v);
-    customPlot1->graph(0)->setPen(QPen(Qt::blue));
-    customPlot1->graph(0)->setName("Аналитическое решение u(x)");
-
-    customPlot1->addGraph();
-    customPlot1->graph(1)->addData(x, v2);
-    customPlot1->graph(1)->setPen(QPen(Qt::green));
-    customPlot1->graph(1)->setName("Численное решение v(x)");
-
-    customPlot1->addGraph();
-    customPlot1->graph(2)->addData(x, xi);
-    customPlot1->graph(2)->setPen(QPen(Qt::red));
-    customPlot1->graph(2)->setName("Разность аналитического и численного решения |v(x)-v2(x)|");
-
-    customPlot1->replot();
-}
-
-bool MainWindow::checkInput(const QString& str_n, size_t& n)
+bool MainWindow::checkInput(const QString& str_n, int& n)
 {
     bool result = false;
 
@@ -161,3 +75,155 @@ bool MainWindow::checkInput(const QString& str_n, size_t& n)
 
     return result;
 }
+
+// ТЕСТОВОЕ ЗАДАНИЕ
+void MainWindow::on_tButtonSolve_pressed()
+{
+    QString str_n = ui->tLineN->text();
+
+    int n;
+
+    if (!checkInput(str_n, n))
+    {
+        return;
+    }
+
+    auto stdv = solve_test(n);
+    QVector<double> v(stdv.begin(), stdv.end());
+    auto stdu = get_true_test_solution(n);
+    QVector<double> u(stdu.begin(), stdu.end());
+
+    QVector<double> x(n+1), z(n+1);
+    double h = 1.0/(double)n;
+    double xc = 0.0;
+    for (int i = 0; i <= n; ++i, xc += h)
+        x[i] = xc;
+    for (int i = 0; i <= n; ++i)
+        z[i] = abs(u[i] - v[i]);
+
+    auto model = (QStandardItemModel*)ui->tTable->model();
+    model->setRowCount(n);
+    for (int i = 0; i <= n; ++i)
+    {
+        model->setData(model->index(i,0),    i);
+        model->setData(model->index(i,1), x[i]);
+        model->setData(model->index(i,2), u[i]);
+        model->setData(model->index(i,3), v[i]);
+        model->setData(model->index(i,4), z[i]);
+    }
+
+    auto max_err_iter = std::max_element(z.begin(), z.end());
+    double max_err = *max_err_iter;
+    double max_err_pos = (max_err_iter - z.begin())*h;
+
+    // График 1
+    QCustomPlot* plot = ui->tPlot;
+    plot->clearGraphs();
+
+    plot->xAxis->setRange(-0.2, 1);
+    plot->yAxis->setRange(-0.2, 1);
+
+    plot->xAxis->setLabel("x");
+    plot->yAxis->setLabel("u");
+    plot->legend->setVisible(true);
+
+    plot->addGraph();
+    plot->addGraph();
+    plot->addGraph();
+
+    plot->graph(1)->addData(x, v);
+    plot->graph(1)->setPen(QPen(Qt::green));
+    plot->graph(1)->setName("Численное решение v(x)");
+
+    plot->graph(2)->addData(x, z);
+    plot->graph(2)->setPen(QPen(Qt::red));
+    plot->graph(2)->setName("Модуль разности аналитического и численного решений |u(x)-v(x)|");
+
+    n = std::min(50*n, 1000000);
+    stdu = get_true_test_solution(n);
+    u.resize(n+1);
+    std::copy(stdu.begin(), stdu.end(), u.begin());
+    x.resize(n);
+    xc = 0.0;
+    h = 1/(double)n;
+    for (int i = 0; i <= n; ++i, xc += h)
+        x[i] = xc;
+
+    plot->graph(0)->addData(x, u);
+    plot->graph(0)->setPen(QPen(Qt::blue));
+    plot->graph(0)->setName("Аналитическое решение u(x)");
+
+    plot->replot();
+}
+
+
+// ОСНОВНОЕ ЗАДАНИЕ
+void MainWindow::on_mButtonSolve_pressed()
+{
+    QString str_n = ui->mLineN->text();
+
+    int n;
+
+    if (!checkInput(str_n, n))
+    {
+        return;
+    }
+
+    auto stdv = solve_main(n);
+    QVector<double> v(stdv.begin(), stdv.end());
+    auto stdv2 = solve_main(2*n);
+    QVector<double> v2(n+1);
+    for (int i = 0; i <= n; ++i)
+        v2[i] = stdv2[2*i];
+
+    QVector<double> x(n+1), z(n+1);
+    double h = 1.0/(double)n;
+    double xc = 0.0;
+    for (int i = 0; i <= n; ++i, xc += h)
+        x[i] = xc;
+    for (int i = 0; i <= n; ++i)
+        z[i] = abs(v[i] - v2[i]);
+
+    auto model = (QStandardItemModel*)ui->mTable->model();
+    model->setRowCount(n);
+    for (int i = 0; i <= n; ++i)
+    {
+        model->setData(model->index(i,0), x[i]);
+        model->setData(model->index(i,1), v[i]);
+        model->setData(model->index(i,2),v2[i]);
+        model->setData(model->index(i,3), z[i]);
+    }
+
+    auto max_err_iter = std::max_element(z.begin(), z.end());
+    double max_err = *max_err_iter;
+    double max_err_pos = (max_err_iter - z.begin())*h;
+
+    // График 1
+    QCustomPlot* plot = ui->mPlot;
+    plot->clearGraphs();
+
+    plot->xAxis->setRange(-0.2, 1);
+    plot->yAxis->setRange(-0.2, 1);
+
+    plot->xAxis->setLabel("x");
+    plot->yAxis->setLabel("u");
+    plot->legend->setVisible(true);
+
+    plot->addGraph();
+    plot->graph(0)->addData(x, v);
+    plot->graph(0)->setPen(QPen(Qt::blue));
+    plot->graph(0)->setName("Аналитическое решение v(x)");
+
+    plot->addGraph();
+    plot->graph(1)->addData(x, v2);
+    plot->graph(1)->setPen(QPen(Qt::green));
+    plot->graph(1)->setName("Аналитическое решение с половинным шагом v2(x)");
+
+    plot->addGraph();
+    plot->graph(2)->addData(x, z);
+    plot->graph(2)->setPen(QPen(Qt::red));
+    plot->graph(2)->setName("Модуль разности численных решений |v(x)-v2(x)|");
+
+    plot->replot();
+}
+

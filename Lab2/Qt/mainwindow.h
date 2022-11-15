@@ -16,12 +16,12 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButton_pressed();
+    void on_tButtonSolve_pressed();
+
+    void on_mButtonSolve_pressed();
 
 private:
     Ui::MainWindow *ui;
-    void on_testSolveButton_pressed();
-    void on_main1SolveButton_clicked();
-    bool checkInput(const QString &, size_t &);
+    bool checkInput(const QString &, int &);
 };
 #endif // MAINWINDOW_H

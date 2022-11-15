@@ -2,10 +2,13 @@
     <qresource prefix="/Oxxy">
         <file>Source/eq1.png</file>
         <file>Source/iv.png</file>
-        <file>Source/kx.png</file>
         <file>Source/conjcond.png</file>
         <file>Source/qx1.png</file>
         <file>Source/fx1.png</file>
         <file>Source/N.png</file>
+        <file>Source/fx2.png</file>
+        <file>Source/kx2.png</file>
+        <file>Source/qx2.png</file>
+        <file>Source/kx1.png</file>
     </qresource>
 </RCC>

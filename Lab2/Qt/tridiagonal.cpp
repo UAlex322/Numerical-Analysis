@@ -13,7 +13,7 @@ std::vector<double> solve_heat_equation(size_t n, double a, double b, double m1,
 	size_t discont_index_dp = (size_t)(xi/h - 0.5) + 1;   // индекс, на котором происходит разрыв функций при движении по точкам a + h*(i + 1/2)
 	std::vector<double> ai(n+1), di(n), pi(n);            // массивы коэффициентов дл¤ построени¤ системы
 
-	double x = a; // текуща¤ точка вида 'x + h*i'
+    double x = a; // текущая точка вида 'x + h*i'
 	for (size_t i = 1; i < discont_index_a; ++i, x += h) {
 		ai[i] = h/k1(x, x+h); // вычисление коэффициента по первой функции
 	}
@@ -90,10 +90,10 @@ std::vector<double> get_true_test_solution(size_t n) {
 	const size_t discont_pos = (size_t)(M_PI_4 / h);
 
 	xc = 0.0;
-	for (size_t i = 0; i < discont_pos; ++i, xc += h)
-		u[i] = u1(xc);
-	for (size_t i = discont_pos; i <= n; ++i, xc += h)
-		u[i] = u2(xc);
+    for (size_t i = 0; i <= discont_pos; ++i, xc += h)
+        u[i] = u1(xc);
+    for (size_t i = discont_pos + 1; i <= n; ++i, xc += h)
+        u[i] = u2(xc);
 
 	return u;
 }
