@@ -25,6 +25,8 @@ private slots:
 
     void on_tButtonSolnInfo_clicked();
 
+    void on_mButtonSolnInfo_pressed();
+
 private:
     QWidget *testSolutionInfo,
             *window;

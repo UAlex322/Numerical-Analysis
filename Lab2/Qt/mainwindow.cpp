@@ -21,9 +21,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     window = new QWidget;
     windowLabel = new QLabel(window);
-
     InfoWidget(window, windowLabel);
     window->activateWindow();
+    setAttribute(Qt::WA_DeleteOnClose);
 
     ui->setupUi(this);
 
@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tTable->setModel(new QStandardItemModel(0,4,this));
     ui->tTable->model()->setHeaderData(0, Qt::Horizontal, "x_i");
     ui->tTable->model()->setHeaderData(1, Qt::Horizontal, "u_i");
-    ui->tTable->model()->setHeaderData(2, Qt::Horizontal, "u_i");
+    ui->tTable->model()->setHeaderData(2, Qt::Horizontal, "v_i");
     ui->tTable->model()->setHeaderData(3, Qt::Horizontal, "|u_i - v_i|");
     ui->tTable->setColumnWidth(0,75);
     for (int i = 1; i < 4; ++i)
@@ -55,10 +55,20 @@ MainWindow::MainWindow(QWidget *parent)
     ui->mTable->setColumnWidth(0,75);
     for (int i = 1; i < 4; ++i)
         ui->mTable->setColumnWidth(i,90);
+
+    ui-> tPicN->setGeometry(145, 210, 16, 16);
+    ui->tLineN->setGeometry(165, 210, 81, 16);
+    ui-> mPicN->setGeometry(145, 210, 16, 16);
+    ui->mLineN->setGeometry(165, 210, 81, 16);
+    ui->tButtonSolnInfo->setGeometry(1100, 235, 141, 24);
+    ui->mButtonSolnInfo->setGeometry(1100, 235, 141, 24);
+
+    ui->tabWidget->setCurrentIndex(0);
 }
 
 MainWindow::~MainWindow()
 {
+    window->close();
     delete ui;
 }
 
@@ -118,21 +128,15 @@ void MainWindow::on_tButtonSolve_pressed()
     model->setRowCount(n);
     for (int i = 0; i <= n; ++i)
     {
-        model->setData(model->index(i,0),    i);
-        model->setData(model->index(i,1), x[i]);
-        model->setData(model->index(i,2), u[i]);
-        model->setData(model->index(i,3), v[i]);
-        model->setData(model->index(i,4), z[i]);
+        model->setData(model->index(i,0), x[i]);
+        model->setData(model->index(i,1), u[i]);
+        model->setData(model->index(i,2), v[i]);
+        model->setData(model->index(i,3), z[i]);
     }
 
     auto max_err_iter = std::max_element(z.begin(), z.end());
     double max_err = *max_err_iter;
     double max_err_pos = (max_err_iter - z.begin())*h;
-
-    windowLabel->setText("Для решения задачи использована равномерная сетка с числом разбиейний n ="+QString( "%1" ).arg(n)+".\n"
-                                 "Задача должна быть решена с погрешностью не более Ɛ = 0.5*10^(-6).\n"
-                                 "Задача решена с погрешностью Ɛ₁ = "+QString( "%1" ).arg(max_err)+".\n"
-                                 "Максимальное отклонение аналитического и численного решения наблюдается в точке x = "+QString( "%1" ).arg(max_err_pos)+".");
 
     // График 1
     QCustomPlot* plot = ui->tPlot;
@@ -161,7 +165,7 @@ void MainWindow::on_tButtonSolve_pressed()
     stdu = get_true_test_solution(n);
     u.resize(n+1);
     std::copy(stdu.begin(), stdu.end(), u.begin());
-    x.resize(n);
+    x.resize(n+1);
     xc = 0.0;
     h = 1/(double)n;
     for (int i = 0; i <= n; ++i, xc += h)
@@ -172,6 +176,14 @@ void MainWindow::on_tButtonSolve_pressed()
     plot->graph(0)->setName("Аналитическое решение u(x)");
 
     plot->replot();
+
+    if (ui->tButtonSolnInfo->isVisible())
+        ui->tButtonSolnInfo->close();
+    windowLabel->setText("Для решения задачи использована равномерная сетка с числом разбиейний n ="+ QString::number(n) +".\n"
+                                 "Задача должна быть решена с погрешностью не более Ɛ = 0.5*10^(-6).\n"
+                                 "Задача решена с погрешностью Ɛ₁ = " + QString::number(max_err) + ".\n"
+                                 "Максимальное отклонение аналитического и численного решения наблюдается в точке x = "+ QString::number(max_err_pos)+".");
+    ui->tButtonSolnInfo->click();
 }
 
 
@@ -216,11 +228,6 @@ void MainWindow::on_mButtonSolve_pressed()
     double max_err = *max_err_iter;
     double max_err_pos = (max_err_iter - z.begin())*h;
 
-    windowLabel->setText("Для решения задачи использована равномерная сетка с числом разбиейний n ="+QString( "%1" ).arg(n)+".\n"
-                         "Задача должна быть решена с заданной точностью Ɛ = 0.5*10^(-6).\n"
-                         "Задача решена с точностью Ɛ₂ = "+QString( "%1" ).arg(max_err)+".\n"
-                         "Максимальное разность численных решений в общих узлах сетки наблюдается в точке x = "+QString( "%1" ).arg(max_err_pos)+".");
-
     // График 1
     QCustomPlot* plot = ui->mPlot;
     plot->clearGraphs();
@@ -248,9 +255,26 @@ void MainWindow::on_mButtonSolve_pressed()
     plot->graph(2)->setName("Модуль разности численных решений |v(x)-v2(x)|");
 
     plot->replot();
+
+    if (ui->tButtonSolnInfo->isVisible())
+        ui->tButtonSolnInfo->close();
+    windowLabel->setText("Для решения задачи использована равномерная сетка с числом разбиейний n ="+ QString::number(n) +".\n"
+                         "Задача должна быть решена с погрешностью не более Ɛ = 0.5*10^(-6).\n"
+                         "Задача решена с погрешностью Ɛ₁ = " + QString::number(max_err) + ".\n"
+                         "Максимальное разность численных решений в общих узлах сетки наблюдается в точке x = "+QString::number(max_err_pos)+".");
+    ui->tButtonSolnInfo->click();
 }
 
 void MainWindow::on_tButtonSolnInfo_clicked()
+{
+    if (window != nullptr && !window->isHidden())
+        window->hide();
+
+    window->show();
+}
+
+
+void MainWindow::on_mButtonSolnInfo_pressed()
 {
     if (window != nullptr && !window->isHidden())
         window->hide();
