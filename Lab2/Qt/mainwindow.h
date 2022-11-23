@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QLabel>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -14,14 +16,20 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    QLabel  *windowLabel;
 
 private slots:
     void on_tButtonSolve_pressed();
 
     void on_mButtonSolve_pressed();
 
+    void on_tButtonSolnInfo_clicked();
+
 private:
+    QWidget *testSolutionInfo,
+            *window;
     Ui::MainWindow *ui;
     bool checkInput(const QString &, int &);
+    void InfoWidget(QWidget *parent, QLabel *label);
 };
 #endif // MAINWINDOW_H
