@@ -7,10 +7,24 @@
 #include <limits>
 #include <QtMath>
 
+void MainWindow::InfoWidget(QWidget *parent, QLabel *label)
+{
+    parent->setWindowTitle("Справка о решении");
+    QHBoxLayout *layout = new QHBoxLayout(parent);
+    layout->addWidget(label);
+    parent->setLayout(layout);
+}
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    window = new QWidget;
+    windowLabel = new QLabel(window);
+
+    InfoWidget(window, windowLabel);
+    window->activateWindow();
+
     ui->setupUi(this);
 
     ui->tPlot->setInteraction(QCP::iRangeZoom,true);
@@ -47,7 +61,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
 
 bool MainWindow::checkInput(const QString& str_n, int& n)
 {
@@ -115,6 +128,11 @@ void MainWindow::on_tButtonSolve_pressed()
     auto max_err_iter = std::max_element(z.begin(), z.end());
     double max_err = *max_err_iter;
     double max_err_pos = (max_err_iter - z.begin())*h;
+
+    windowLabel->setText("Для решения задачи использована равномерная сетка с числом разбиейний n ="+QString( "%1" ).arg(n)+".\n"
+                                 "Задача должна быть решена с погрешностью не более Ɛ = 0.5*10^(-6).\n"
+                                 "Задача решена с погрешностью Ɛ₁ = "+QString( "%1" ).arg(max_err)+".\n"
+                                 "Максимальное отклонение аналитического и численного решения наблюдается в точке x = "+QString( "%1" ).arg(max_err_pos)+".");
 
     // График 1
     QCustomPlot* plot = ui->tPlot;
@@ -198,6 +216,11 @@ void MainWindow::on_mButtonSolve_pressed()
     double max_err = *max_err_iter;
     double max_err_pos = (max_err_iter - z.begin())*h;
 
+    windowLabel->setText("Для решения задачи использована равномерная сетка с числом разбиейний n ="+QString( "%1" ).arg(n)+".\n"
+                         "Задача должна быть решена с заданной точностью Ɛ = 0.5*10^(-6).\n"
+                         "Задача решена с точностью Ɛ₂ = "+QString( "%1" ).arg(max_err)+".\n"
+                         "Максимальное разность численных решений в общих узлах сетки наблюдается в точке x = "+QString( "%1" ).arg(max_err_pos)+".");
+
     // График 1
     QCustomPlot* plot = ui->mPlot;
     plot->clearGraphs();
@@ -225,5 +248,13 @@ void MainWindow::on_mButtonSolve_pressed()
     plot->graph(2)->setName("Модуль разности численных решений |v(x)-v2(x)|");
 
     plot->replot();
+}
+
+void MainWindow::on_tButtonSolnInfo_clicked()
+{
+    if (window != nullptr && !window->isHidden())
+        window->hide();
+
+    window->show();
 }
 
