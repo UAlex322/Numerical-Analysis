@@ -21,7 +21,7 @@ void MainWindow::initializeOutputInfoWidget(QWidget *parent, QLabel *label)
 void MainWindow::initializePlotWidget(QCustomPlot *plotWidget, QWidget *backgroundWidget)
 {
     QPalette pal(palette());
-    pal.setColor(QPalette::Background, Qt::gray);
+    pal.setColor(QPalette::Window, Qt::gray);
     backgroundWidget->setAutoFillBackground(true);
     backgroundWidget->setPalette(pal);
     backgroundWidget->setGeometry(plotWidget->x() - 1, plotWidget->y() - 1, plotWidget->width() + 2, plotWidget->height() + 2);
