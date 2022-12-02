@@ -30,25 +30,12 @@
      <attribute name="title">
       <string>Задача 11</string>
      </attribute>
-     <widget class="QLabel" name="main2IntroText">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>361</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Численно решить задачу Коши для системы ОДУ 2-го порядка.&lt;br/&gt;Использовать метод Рунге-Кутта 4 порядка.&lt;br/&gt;Параметр 'L' должен быть положительным.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
      <widget class="QLabel" name="main2Picture_Equation">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>60</y>
-        <width>231</width>
+        <x>-10</x>
+        <y>120</y>
+        <width>191</width>
         <height>91</height>
        </rect>
       </property>
@@ -65,11 +52,16 @@
      <widget class="QPushButton" name="main2SolveButton">
       <property name="geometry">
        <rect>
-        <x>11</x>
-        <y>310</y>
-        <width>141</width>
-        <height>55</height>
+        <x>70</x>
+        <y>520</y>
+        <width>101</width>
+        <height>21</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Решить!</string>
@@ -78,10 +70,10 @@
      <widget class="QLabel" name="main2Picture_x0">
       <property name="geometry">
        <rect>
-        <x>14</x>
-        <y>162</y>
-        <width>30</width>
-        <height>23</height>
+        <x>36</x>
+        <y>270</y>
+        <width>28</width>
+        <height>21</height>
        </rect>
       </property>
       <property name="text">
@@ -97,18 +89,18 @@
      <widget class="QLineEdit" name="main2LineEdit_u0">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>200</y>
+        <x>72</x>
+        <y>298</y>
         <width>101</width>
-        <height>25</height>
+        <height>20</height>
        </rect>
       </property>
      </widget>
      <widget class="QLabel" name="main2Picture_nmax">
       <property name="geometry">
        <rect>
-        <x>165</x>
-        <y>250</y>
+        <x>5</x>
+        <y>455</y>
         <width>60</width>
         <height>25</height>
        </rect>
@@ -126,28 +118,28 @@
      <widget class="QLineEdit" name="main2LineEdit_h">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>280</y>
+        <x>72</x>
+        <y>420</y>
         <width>101</width>
-        <height>25</height>
+        <height>20</height>
        </rect>
       </property>
      </widget>
      <widget class="QLineEdit" name="main2LineEdit_nmax">
       <property name="geometry">
        <rect>
-        <x>230</x>
-        <y>250</y>
+        <x>72</x>
+        <y>458</y>
         <width>101</width>
-        <height>25</height>
+        <height>20</height>
        </rect>
       </property>
      </widget>
      <widget class="QLabel" name="main2Picture_v_eps">
       <property name="geometry">
        <rect>
-        <x>194</x>
-        <y>281</y>
+        <x>34</x>
+        <y>485</y>
         <width>31</width>
         <height>25</height>
        </rect>
@@ -165,8 +157,8 @@
      <widget class="QLabel" name="main2Picture_x_eps">
       <property name="geometry">
        <rect>
-        <x>193</x>
-        <y>191</y>
+        <x>35</x>
+        <y>390</y>
         <width>31</width>
         <height>25</height>
        </rect>
@@ -184,18 +176,18 @@
      <widget class="QLineEdit" name="main2LineEdit_v_eps">
       <property name="geometry">
        <rect>
-        <x>230</x>
-        <y>280</y>
+        <x>72</x>
+        <y>486</y>
         <width>101</width>
-        <height>25</height>
+        <height>20</height>
        </rect>
       </property>
      </widget>
      <widget class="QLabel" name="main2Picture_h">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>275</y>
+        <x>42</x>
+        <y>416</y>
         <width>25</width>
         <height>25</height>
        </rect>
@@ -213,11 +205,16 @@
      <widget class="QPushButton" name="main2ShowSolnInfoButton">
       <property name="geometry">
        <rect>
-        <x>191</x>
-        <y>310</y>
-        <width>141</width>
-        <height>55</height>
+        <x>70</x>
+        <y>550</y>
+        <width>101</width>
+        <height>31</height>
        </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
       </property>
       <property name="text">
        <string>Посмотреть
@@ -227,28 +224,28 @@
      <widget class="QLineEdit" name="main2LineEdit_xmax">
       <property name="geometry">
        <rect>
-        <x>230</x>
-        <y>160</y>
+        <x>72</x>
+        <y>364</y>
         <width>101</width>
-        <height>25</height>
+        <height>20</height>
        </rect>
       </property>
      </widget>
      <widget class="QLineEdit" name="main2LineEdit_x0">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>160</y>
+        <x>72</x>
+        <y>270</y>
         <width>101</width>
-        <height>25</height>
+        <height>20</height>
        </rect>
       </property>
      </widget>
      <widget class="QLabel" name="main2Picture_xmax">
       <property name="geometry">
        <rect>
-        <x>165</x>
-        <y>161</y>
+        <x>7</x>
+        <y>361</y>
         <width>60</width>
         <height>25</height>
        </rect>
@@ -266,18 +263,18 @@
      <widget class="QLineEdit" name="main2LineEdit_x_eps">
       <property name="geometry">
        <rect>
-        <x>230</x>
-        <y>190</y>
+        <x>72</x>
+        <y>392</y>
         <width>101</width>
-        <height>25</height>
+        <height>20</height>
        </rect>
       </property>
      </widget>
      <widget class="QLabel" name="main2Picture_u0">
       <property name="geometry">
        <rect>
-        <x>13</x>
-        <y>203</y>
+        <x>33</x>
+        <y>299</y>
         <width>31</width>
         <height>21</height>
        </rect>
@@ -295,18 +292,18 @@
      <widget class="QLineEdit" name="main2LineEdit_u0_dash">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>240</y>
+        <x>72</x>
+        <y>326</y>
         <width>101</width>
-        <height>25</height>
+        <height>20</height>
        </rect>
       </property>
      </widget>
      <widget class="QLabel" name="main2Picture_u0_dash">
       <property name="geometry">
        <rect>
-        <x>13</x>
-        <y>234</y>
+        <x>34</x>
+        <y>320</y>
         <width>32</width>
         <height>28</height>
        </rect>
@@ -324,20 +321,20 @@
      <widget class="QLineEdit" name="main2LineEdit_L">
       <property name="geometry">
        <rect>
-        <x>230</x>
-        <y>220</y>
-        <width>101</width>
-        <height>25</height>
+        <x>72</x>
+        <y>232</y>
+        <width>100</width>
+        <height>20</height>
        </rect>
       </property>
      </widget>
      <widget class="QLabel" name="main2Picture_a">
       <property name="geometry">
        <rect>
-        <x>204</x>
-        <y>220</y>
-        <width>25</width>
-        <height>21</height>
+        <x>40</x>
+        <y>226</y>
+        <width>30</width>
+        <height>30</height>
        </rect>
       </property>
       <property name="text">
@@ -353,18 +350,18 @@
      <widget class="QTableView" name="main2Table">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>380</y>
-        <width>511</width>
-        <height>471</height>
+        <x>210</x>
+        <y>360</y>
+        <width>811</width>
+        <height>341</height>
        </rect>
       </property>
      </widget>
      <widget class="QWidget" name="main2Plot1Background" native="true">
       <property name="geometry">
        <rect>
-        <x>370</x>
-        <y>70</y>
+        <x>400</x>
+        <y>10</y>
         <width>41</width>
         <height>21</height>
        </rect>
@@ -373,8 +370,8 @@
      <widget class="QWidget" name="main2Plot3Background" native="true">
       <property name="geometry">
        <rect>
-        <x>380</x>
-        <y>100</y>
+        <x>400</x>
+        <y>30</y>
         <width>41</width>
         <height>31</height>
        </rect>
@@ -383,28 +380,28 @@
      <widget class="QCustomPlot" name="main2Plot1" native="true">
       <property name="geometry">
        <rect>
-        <x>530</x>
-        <y>10</y>
-        <width>681</width>
-        <height>841</height>
+        <x>210</x>
+        <y>20</y>
+        <width>400</width>
+        <height>320</height>
        </rect>
       </property>
      </widget>
      <widget class="QCustomPlot" name="main2Plot2" native="true">
       <property name="geometry">
        <rect>
-        <x>1220</x>
-        <y>10</y>
-        <width>601</width>
-        <height>415</height>
+        <x>615</x>
+        <y>20</y>
+        <width>400</width>
+        <height>320</height>
        </rect>
       </property>
      </widget>
      <widget class="QWidget" name="main2Plot2Background" native="true">
       <property name="geometry">
        <rect>
-        <x>330</x>
-        <y>70</y>
+        <x>380</x>
+        <y>10</y>
         <width>31</width>
         <height>41</height>
        </rect>
@@ -413,30 +410,66 @@
      <widget class="QCustomPlot" name="main2Plot3" native="true">
       <property name="geometry">
        <rect>
-        <x>1220</x>
-        <y>440</y>
-        <width>571</width>
-        <height>411</height>
+        <x>1020</x>
+        <y>20</y>
+        <width>400</width>
+        <height>320</height>
        </rect>
       </property>
      </widget>
-     <widget class="QPushButton" name="introTextButton">
+     <widget class="QPushButton" name="progInfoButton">
       <property name="geometry">
        <rect>
-        <x>260</x>
-        <y>30</y>
-        <width>89</width>
-        <height>25</height>
+        <x>10</x>
+        <y>20</y>
+        <width>180</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="text">
-       <string>Справка</string>
+       <string>Справка по задаче</string>
       </property>
      </widget>
+     <widget class="QLabel" name="infLabel">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>80</y>
+        <width>181</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:8pt;&quot;&gt;Программа численно решает&lt;br/&gt;задачу Коши для ДУ:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="tableInfoButton">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>180</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Справка по таблице</string>
+      </property>
+     </widget>
+     <widget class="QWidget" name="main2TableBackground" native="true">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>190</y>
+        <width>21</width>
+        <height>51</height>
+       </rect>
+      </property>
+     </widget>
+     <zorder>main2TableBackground</zorder>
      <zorder>main2Plot3Background</zorder>
      <zorder>main2Plot2Background</zorder>
      <zorder>main2Plot1Background</zorder>
-     <zorder>main2IntroText</zorder>
      <zorder>main2Picture_Equation</zorder>
      <zorder>main2SolveButton</zorder>
      <zorder>main2Picture_x0</zorder>
@@ -462,7 +495,9 @@
      <zorder>main2Plot1</zorder>
      <zorder>main2Plot2</zorder>
      <zorder>main2Plot3</zorder>
-     <zorder>introTextButton</zorder>
+     <zorder>progInfoButton</zorder>
+     <zorder>infLabel</zorder>
+     <zorder>tableInfoButton</zorder>
     </widget>
    </widget>
   </widget>
@@ -472,7 +507,7 @@
      <x>0</x>
      <y>0</y>
      <width>1689</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

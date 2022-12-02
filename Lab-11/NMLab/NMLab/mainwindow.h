@@ -23,30 +23,14 @@ public:
     ~MainWindow();
 
 private slots:
-    //void on_testRadioButton_clicked();
-    //void on_testRadioButton2_clicked();
 
-    //void on_testSolveButton_pressed();
-
-    //void on_testShowSolnInfoButton_clicked();
-
-    //void on_main1SolveButton_clicked();
-
-    //void on_main1RadioButton_clicked();
-
-    //void on_main1RadioButton2_clicked();
-
-    //void on_main1ShowSolnInfoButton_clicked();
-
-    void on_introTextButton_clicked();
+    void on_progInfoButton_clicked();
 
     void on_main2SolveButton_clicked();
 
-    //void on_main2RadioButton_clicked();
-
-    //void on_main2RadioButton2_clicked();
-
     void on_main2ShowSolnInfoButton_clicked();
+
+    void on_tableInfoButton_pressed();
 
 private:
     Ui::MainWindow *ui;
@@ -54,11 +38,13 @@ private:
     QWidget *testSolutionInfo,
             *main1SolutionInfo,
             *main2SolutionInfo,
-            *introReference;
+            *progInfo,
+            *tableInfo;
     QLabel *testSolutionInfoLabel,
            *main1SolutionInfoLabel,
            *main2SolutionInfoLabel,
-           *introReferenceLabel;
+           *progInfoLabel,
+           *tableInfoLabel;
     QCPCurve *phase;
 
     bool testIsSolvedOnce = false;
@@ -67,6 +53,8 @@ private:
 
     void initializeOutputInfoWidget(QWidget *parent, QLabel *label);
     void initializePlotWidget(QCustomPlot *plotWidget, QWidget *backgroundWidget);
+    void initializeBackground(QWidget *widget, QWidget *backgroundWidget);
+
     //void initializeTestTaskTable(QTableView *table, size_t rows);
     void initializeMainTaskTable(QTableView *table, size_t rows);
     bool checkInput(const QString &, const QString &, const QString &, const QString &, const QString &, const QString &, const QString &,

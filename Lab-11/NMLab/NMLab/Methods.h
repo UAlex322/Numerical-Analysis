@@ -4,7 +4,7 @@
 #include <cmath>
 #include <array>
 #include <limits>
-
+#include <utility>
 
 ////////////////////////////////////////////////////////////////////////////////////
 
@@ -143,7 +143,7 @@ std::vector<Entry<value_t, dim>> ivp_no_step_adjust (const Method<value_t, dim> 
 
 // Общий вид метода с регулировкой шага
 template <typename value_t, size_t dim>
-std::vector<Entry<value_t, dim>> ivp_step_adjust (const Method<value_t, dim> &method,
+std::pair<std::vector<Entry<value_t, dim>>, int> ivp_step_adjust (const Method<value_t, dim> &method,
                                                   const Diff_equation<value_t, dim> &F,
                                                   const double x0,
                                                   const value_t &u0,
@@ -203,7 +203,12 @@ std::vector<Entry<value_t, dim>> ivp_step_adjust (const Method<value_t, dim> &me
         ++iteration;
     }
 
-    return soln;
+    for (size_t i = soln.size()-1; i > 0; --i) {
+        soln[i].c_plus  = soln[i-1].c_plus;
+        soln[i].c_minus = soln[i-1].c_minus;
+    }
+
+    return {soln, iteration};
 }
 
 
@@ -211,19 +216,6 @@ std::vector<Entry<value_t, dim>> ivp_step_adjust (const Method<value_t, dim> &me
 
 
 // Реализации шагов методов
-
-double rk4_next_point(double x, double v, const Diff_equation<double,1> &F, double h) {
-    double k1, k2, k3, k4;
-    double h2 = 0.5 * h;
-    auto f = F[0];
-
-    k1 = f(x,v);
-    k2 = f(x + h2, v + h2*k1);
-    k3 = f(x + h2, v + h2*k2);
-    k4 = f(x + h,  v + h *k3);
-
-    return v + h/6.0 * (k1 + 2.0*(k2 + k3) + k4);
-};
 
 Point<2> rk4_system_2_next_point(double x, const Point<2> &v, const Diff_equation<Point<2>, 2> &F, double h) {
     Point<2> k1, k2, k3, k4;
@@ -241,5 +233,4 @@ Point<2> rk4_system_2_next_point(double x, const Point<2> &v, const Diff_equatio
     return v + h/6.0 * (k1 + 2.0 * (k2 + k3) + k4);
 }
 
-Method<double, 1> rk4(rk4_next_point, 4); // Метод Рунге-Кутта 4 порядка для ОДУ
 Method<Point<2>, 2> rk4_system2(rk4_system_2_next_point, 4); // Метод Рунге-Кутта 4 порядка для систем ОДУ 2 порядка
