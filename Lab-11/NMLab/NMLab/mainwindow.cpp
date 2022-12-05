@@ -304,11 +304,10 @@ void fillSolutionInfoLabel(QLabel *label, const pair<vector<Entry<value_t, dim>>
     solutionInfoString += "\nЧисло шагов метода: N = " + QString::number(numOfIterations);
     solutionInfoString += "\nТочность выхода на правую границу: " + QString::number(x_max - solution.back().x);
     solutionInfoString += "\nx_N = " + QString::number(solution.back().x) + ", v_N = " + QString::number(solution.back().v[0]);
-    solutionInfoString += "\n\nМаксимум модуля ОЛП: " + QString::number(s_max) + " при x = "
+    solutionInfoString += "\n\nМаксимум |S|: " + QString::number(s_max) + " при x = "
                                                       + QString::number(solution[s_max_idx].x);
-    solutionInfoString += "\nМинимум модуля ОЛП: "  + QString::number(s_min) + " при x = "
+    solutionInfoString += "\nМинимум |S|: "  + QString::number(s_min) + " при x = "
                                                       + QString::number(solution[s_min_idx].x);
-
     solutionInfoString += "\n\nОбщее число удвоений шага: " + QString::number(plus_count);
     solutionInfoString += "\nОбщее число делений шага: " + QString::number(minus_count);
 
