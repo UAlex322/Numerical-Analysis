@@ -208,7 +208,7 @@
         <x>70</x>
         <y>550</y>
         <width>101</width>
-        <height>31</height>
+        <height>36</height>
        </rect>
       </property>
       <property name="font">
@@ -352,7 +352,7 @@
        <rect>
         <x>210</x>
         <y>360</y>
-        <width>811</width>
+        <width>841</width>
         <height>341</height>
        </rect>
       </property>
@@ -466,6 +466,42 @@
        </rect>
       </property>
      </widget>
+     <widget class="QPushButton" name="clearButton">
+      <property name="geometry">
+       <rect>
+        <x>1060</x>
+        <y>360</y>
+        <width>93</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Очистить</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>1060</x>
+        <y>390</y>
+        <width>241</width>
+        <height>111</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Пояснения к графикам:&lt;/span&gt;&lt;br/&gt;Синий - v(x) - численное решение;&lt;br/&gt;Зелёный - v2(x) - численное решение,&lt;br/&gt;полученное с половинным шагом. &lt;br/&gt;Графики подписаны в формате:&lt;br/&gt;&lt;span style=&quot; color:#55007f;&quot;&gt;(L, x0, u0, u'0).&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
      <zorder>main2TableBackground</zorder>
      <zorder>main2Plot3Background</zorder>
      <zorder>main2Plot2Background</zorder>
@@ -498,6 +534,8 @@
      <zorder>progInfoButton</zorder>
      <zorder>infLabel</zorder>
      <zorder>tableInfoButton</zorder>
+     <zorder>clearButton</zorder>
+     <zorder>label</zorder>
     </widget>
    </widget>
   </widget>

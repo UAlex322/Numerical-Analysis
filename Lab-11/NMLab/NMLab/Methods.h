@@ -43,13 +43,13 @@ Point<dim> operator*(const Point<dim> &a, double x) {
     return result;
 }
 
-// Расстояние между точками (нужно для получения оценки локальной погрешности)
+// Расстояние между точками (нужно для оценки локальной погрешности)
 template <size_t dim>
 double dist(const Point<dim> &a, const Point<dim> &b) {
     double result = 0.0;
     for (size_t i = 0; i < dim; ++i)
-        result += (b[i] - a[i]) * (b[i] - a[i]);
-    return sqrt(result);
+        result = std::max(result, std::abs(b[i] - a[i]));
+    return result;
 }
 
 template <>
@@ -83,7 +83,7 @@ struct Entry {
     double x;
     value_t v;
     value_t v2;
-    double s_star;
+    double s;
     double h;
     int c_plus;
     int c_minus;
@@ -161,7 +161,6 @@ std::pair<std::vector<Entry<value_t, dim>>, int> ivp_step_adjust (const Method<v
     value_t v = u0, v_next, v_half;
     double h_half = 0.5*h;
     double s;       // контрольная величина;
-    double s_star;  // оценка локальной погрешности
     double eps_lower_bound = v_eps/pow(2.0, method.p + 1); // при |S| < eps/2^(p+1) увеличивается шаг
 
     std::vector<Entry<value_t, dim>> soln;
@@ -171,7 +170,6 @@ std::pair<std::vector<Entry<value_t, dim>>, int> ivp_step_adjust (const Method<v
         v_half = method.next_point(x + h_half, method.next_point(x, v, F, h_half), F, h_half);
         v_next = method.next_point(x, v, F, h);
         s      = method.s_mult * dist(v_half, v_next);
-        s_star = method.pow2 * s;
 
         if (std::abs(s) > v_eps || x + h > x_max - x_eps) {
             h = h_half;
@@ -183,13 +181,12 @@ std::pair<std::vector<Entry<value_t, dim>>, int> ivp_step_adjust (const Method<v
             if constexpr (dim > 1)
                 v = v_half;
             else
-                v = v_next + s_star;
-
+                v = v_next += (v_half - v_next) * method.s_star_mult;
 
             if (x <= x_max) {
                 soln.back().c_minus = minus_count;
                 soln.back().c_plus = plus_count;
-                soln.push_back({x,v,v_half,s_star,h,0,0});
+                soln.push_back({x,v_next,v_half,s,h,0,0});
             }
             minus_count = 0;
             plus_count = 0;
