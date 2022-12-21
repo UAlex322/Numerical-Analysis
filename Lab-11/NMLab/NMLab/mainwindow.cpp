@@ -509,7 +509,7 @@ void MainWindow::on_main2SolveButton_clicked()
     solutionInfoString += "№ варианта задания: 1";
     solutionInfoString += "\nТип задачи: основная";
     solutionInfoString += "\nМетод Рунге-Кутта порядка 'p = 4'";
-    solutionInfoString += "\nСпособы счёта - выход на правую границу ИЛИ выполнение заданного числа шагов метода";
+    solutionInfoString += "\nКритерии остановки - выход на правую границу ИЛИ выполнение максимального числа шагов метода";
     solutionInfoString += "\n\nx0 = " + QString::number(x0) + ", u0 = " + QString::number(u0);
     solutionInfoString += "\nx_max = " + QString::number(x_max) + ", ε_x = " + QString::number(x_eps);
     solutionInfoString += "\nh0 = " + QString::number(h) + ", N_max = " + QString::number(n_max);

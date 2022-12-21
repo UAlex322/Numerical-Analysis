@@ -171,7 +171,7 @@ std::pair<std::vector<Entry<value_t, dim>>, int> ivp_step_adjust (const Method<v
         v_next = method.next_point(x, v, F, h);
         s      = method.s_mult * dist(v_half, v_next);
 
-        if (std::abs(s) > v_eps || x + h > x_max - x_eps) {
+        if (std::abs(s) > v_eps) {
             h = h_half;
             h_half *= 0.5;
             ++minus_count;
@@ -187,14 +187,18 @@ std::pair<std::vector<Entry<value_t, dim>>, int> ivp_step_adjust (const Method<v
                 soln.back().c_minus = minus_count;
                 soln.back().c_plus = plus_count;
                 soln.push_back({x,v_next,v_half,s,h,0,0});
+				
+				minus_count = 0;
+				plus_count = 0;
+				if (std::abs(s) < eps_lower_bound) {
+					h_half = h;
+					h *= 2.0;
+					++plus_count;
+				}
             }
-            minus_count = 0;
-            plus_count = 0;
-            if (std::abs(s) < eps_lower_bound) {
-                h_half = h;
-                h *= 2.0;
-                ++plus_count;
-            }
+			else {
+				h = x_max - x - numeric_limits<double>::epsilon();
+			}
         }
 
         ++iteration;
