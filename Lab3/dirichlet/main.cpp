@@ -14,7 +14,7 @@ void checkInput(ValueT &value, const string &outText, const string &errorText, H
         try {
             cout << outText;
             cin >> inputString;
-            handler(value, inputString);
+            value = handler(inputString);
 
             success = true;
         }
@@ -24,16 +24,18 @@ void checkInput(ValueT &value, const string &outText, const string &errorText, H
     } while (!success);
 }
 
-void doubleHandler(double &value, const string &inputString) {
-    value = stod(inputString);
-    if (value <= 0.0)
+double doubleHandler(string &inputString) {
+    double val = stof(inputString);
+    if (val <= 0.0)
         throw;
+    return val;
 }
 
-void intHandler(int64_t &value, const string &inputString) {
-    value = stoll(inputString);
-    if (value <= 0)
+int64_t intHandler(string &inputString) {
+    int64_t val = stoll(inputString);
+    if (val <= 0)
         throw;
+    return val;
 }
 
 void print_solution(const vector<double> &u, size_t n, size_t m, size_t precision) {
@@ -44,20 +46,19 @@ void print_solution(const vector<double> &u, size_t n, size_t m, size_t precisio
     size_t width = precision + 4;
 
     cout.precision(precision);
-    cout << setw(width) << "y\\x";
-    for (size_t i = 0; i <= n; ++i)
-        cout << setw(width) << fixed << h*i;
-    cout << "\n";
 
-    y = 0.0;
-    for (size_t j = 0; j <= m; ++j, y += k) {
+    y = 1.0;
+    for (int64_t j = m; j >= 0; --j, y -= k) {
         x = 0.0;
         cout << setw(width) << fixed << y;
         for (size_t i = 0; i <= n; ++i, x += h)
             cout << setw(width) << fixed << u[(n+1)*j + i];
         cout << '\n';
     }
-    cout << '\n';
+    cout << setw(width) << "y/x";
+    for (size_t i = 0; i <= n; ++i)
+        cout << setw(width) << fixed << h*i;
+    cout << "\n\n";
 }
 
 const string introMessage = "\
@@ -111,7 +112,7 @@ int main() {
         checkInput(prec, "Введите число знаков после запятой в выведенном решении: ", "Некорректное значение числа знаков, повторите ввод", intHandler);
 
         auto v = solve_dirichlet_optimized(a, b, c, d, n, m, U, U, U, U, F, N_max, N, eps_max, eps);
-        cout << "РЕЗУЛЬТАТ:\n";
+        cout << "\nРЕЗУЛЬТАТ:\n";
         cout << "Выполнено N = " << N << " шаг(ов).\n";
         cout << "Точность на выходе eps_N = " << eps << '\n';
         cout << "Евклидова норма невязки на выходе ||R_N|| = " << discrepancy(F, v, n, m) << '\n';
