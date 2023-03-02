@@ -385,8 +385,8 @@ void MainWindow::on_main2SolveButton_clicked()
             str_h     = ui->main2LineEdit_h    ->text(),
             str_x_eps = ui->main2LineEdit_x_eps->text(),
             str_L     = ui->main2LineEdit_L->text(),
-            str_n_max  = ui->main2LineEdit_nmax  ->text(),
-            str_v_eps  = ui->main2LineEdit_v_eps ->text();
+           str_n_max  = ui->main2LineEdit_nmax  ->text(),
+           str_v_eps  = ui->main2LineEdit_v_eps ->text();
 
     double x0, u0, u0_dash, x_max, h, x_eps, v_eps, L;
     int n_max;
